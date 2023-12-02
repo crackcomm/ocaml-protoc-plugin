@@ -336,7 +336,13 @@ let c_of_field ~params ~syntax ~scope field =
     failwith "Required fields illegal under proto3"
 
   (* Optional message *)
-  | _, { label = Some Label.LABEL_OPTIONAL; type' = Some TYPE_MESSAGE; type_name; _ } ->
+  | `Proto3, { label = Some Label.LABEL_OPTIONAL; type' = Some TYPE_MESSAGE; type_name; proto3_optional = None; _ } ->
+    let spec = spec_of_message ~scope type_name in
+    Basic (number, spec, Required)
+    |> c_of_compound name
+
+  (* Optional message *)
+  | `Proto2, { label = Some Label.LABEL_OPTIONAL; type' = Some TYPE_MESSAGE; type_name; _ } ->
     let spec = spec_of_message ~scope type_name in
     Basic_opt (number, spec)
     |> c_of_compound name
