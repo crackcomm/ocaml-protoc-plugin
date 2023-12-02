@@ -3,4 +3,5 @@
  (public_name protoc-gen-ocaml)
  (libraries spec)
  (package ocaml-protoc-plugin)
-)
+ (preprocess
+  (pps ppx_jane)))
