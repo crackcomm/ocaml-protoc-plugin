@@ -1,5 +1,6 @@
+open Sexplib0.Sexp_conv
 open StdLabels
-type t = (int * Field.t) list
+type t = (int * Field.t) list [@@deriving sexp_of]
 let default = []
 let pp_item fmt (index, field) = Format.fprintf fmt "(%d, %a)" index Field.pp field
 let pp : Format.formatter -> t -> unit = fun fmt -> Format.pp_print_list pp_item fmt

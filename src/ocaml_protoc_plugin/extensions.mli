@@ -1,4 +1,4 @@
-type t = (int * Field.t) list
+type t = (int * Field.t) list [@@deriving sexp_of]
 val default : t
 val pp : Format.formatter -> t -> unit
 val show : t -> string
