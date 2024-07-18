@@ -1,17 +1,21 @@
+open Sexplib.Std
+
 type length_delimited = {
   offset : int;
   length : int;
   data : string;
 }
+[@@deriving sexp]
 
 type field_type = Varint | Fixed64 | Fixed32 | Length_delimited
 
 type t =
-  | Varint of Int64.t (* int32, int64, uint32, uint64, sint32, sint64, bool, enum *)
+  | Varint of int64 (* int32, int64, uint32, uint64, sint32, sint64, bool, enum *)
   | Varint_unboxed of int
-  | Fixed_64_bit of Int64.t (* fixed64, sfixed64, double *)
+  | Fixed_64_bit of int64 (* fixed64, sfixed64, double *)
   | Length_delimited of length_delimited (* string, bytes, embedded messages, packed repeated fields *)
-  | Fixed_32_bit of Int32.t (* fixed32, sfixed32, float *)
+  | Fixed_32_bit of int32 (* fixed32, sfixed32, float *)
+[@@deriving sexp]
 
 let varint v = Varint v
 let varint_unboxed v = Varint_unboxed v
